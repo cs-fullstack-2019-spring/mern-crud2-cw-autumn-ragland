@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ListRSVP from "./ListRSVP";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import CreateRSVP from "./CreateRSVP";
 
+//render list and links for back to home and add RSVP
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+          <h1>RSVP</h1>
+          <Router>
+              <Link to={"/"}>All RSVPs</Link>
+              <br/>
+              <Link to={"/create"}>Add RSVP</Link>
+              <Route path={'/'} exact component={ListRSVP} />
+              <Route path={'/create'} component={CreateRSVP} />
+          </Router>
       </div>
     );
   }
