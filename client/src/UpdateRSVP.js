@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-
+import {Redirect} from "react-router-dom";
 class UpdateRSVP extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             rsvp_person: '',
-            rsvp_going: false
+            rsvp_going: false,
+            loadHome:false
         };
-        console.log(this.props.editData.rsvp_person)
     }
     //update event handlers
     updatePerson = (e) => {
@@ -25,7 +25,7 @@ class UpdateRSVP extends Component {
             rsvp_person:this.state.rsvp_person,
             rsvp_going:this.state.rsvp_going,
         };
-        return fetch('/rsvp/' + this.props.editData._id,{
+        fetch('/rsvp/' + this.props.editData._id,{
             method: 'PUT',
             headers : {
                 'Accept': 'application/json',
@@ -33,17 +33,24 @@ class UpdateRSVP extends Component {
             },
             mode:'cors',
             body:JSON.stringify(RSVP)
-        });
-
+        })
+        //ERROR: Max depth exceeded/can't set state
+        .then(()=>this.setState({loadHome:true}))
     };
+
     //render form
     render() {
+
+        if (this.state.loadHome === true) {
+            return <Redirect to='/' />
+        }
+
         return (
 
             <form onSubmit={this.submitForm}>
                 <div>
                     <label>Name: </label>
-                    <input type="text"  placeholder={this.props.editData.rsvp_person} value={this.state.rsvp_person} onChange={this.updatePerson}/>
+                    <input type="text" value={this.state.rsvp_person} placeholder={this.props.editData.rsvp_person} onChange={this.updatePerson}/>
                 </div>
                 <div>
                     <label>Going: </label>

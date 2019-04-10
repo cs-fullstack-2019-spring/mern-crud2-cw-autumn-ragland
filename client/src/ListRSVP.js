@@ -9,14 +9,15 @@ class ListRSVP extends Component {
             rsvp:[],
             editData:{},
             editing:false,
-        }
+        };
+        this.passData()
     }
     //pass data on load
-    componentDidMount() {
+    passData =()=> {
         fetch('/rsvp')
             .then(data => data.json())
             .then(jsonData => this.setState({rsvp:jsonData}))
-    }
+    };
     //update event handler
     updateButton = (e) => {
         this.setState({editing:true});

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 
 class CreateRSVP extends Component {
@@ -10,34 +10,43 @@ class CreateRSVP extends Component {
             rsvp_going: false
         }
     }
+
     //update event handlers
     updatePerson = (e) => {
-        this.setState({rsvp_person:e.target.value})
+        this.setState({rsvp_person: e.target.value})
     };
 
     updateGoing = (e) => {
-        this.setState({rsvp_going:true})
+        this.setState({rsvp_going: true})
     };
     //form submission event handler
     submitForm = (e) => {
         e.preventDefault();
         let RSVP = {
-            rsvp_person:this.state.rsvp_person,
-            rsvp_going:this.state.rsvp_going,
+            rsvp_person: this.state.rsvp_person,
+            rsvp_going: this.state.rsvp_going,
         };
-        return fetch('/rsvp',{
+        fetch('/rsvp', {
             method: 'POST',
-            headers : {
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            mode:'cors',
-            body:JSON.stringify(RSVP)
+            mode: 'cors',
+            body: JSON.stringify(RSVP)
         })
 
+        .then(() => this.setState({loadHome: true}))
+
     };
+
     //render form
     render() {
+
+        if (this.state.loadHome === true) {
+            return <Redirect to='/' />
+        }
+
         return (
             <form onSubmit={this.submitForm}>
                 <div>
