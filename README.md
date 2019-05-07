@@ -1,3 +1,6 @@
+POINTS: 2
+KEY: Good Job!
+
 ## MERN/CRUD Classwork
 
 ### Exercise:
